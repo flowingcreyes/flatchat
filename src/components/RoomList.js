@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { tsExpressionWithTypeArguments } from "@babel/types";
 
 class RoomList extends Component {
   constructor(props) {
@@ -37,7 +36,7 @@ class RoomList extends Component {
 
   render() {
     let rooms = this.state.rooms.map(room => (
-      <div key={room.key}>{room.name}</div>
+      <div key={room.key} onClick={() => this.props.activeRoom(room)}>{room.name}</div>
     ));
     return (
       <div className="room">
