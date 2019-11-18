@@ -32,7 +32,7 @@ class RoomList extends Component {
     });
     this.setState({
       newRoomName: ""
-    })
+    });
   }
 
   render() {
@@ -42,9 +42,13 @@ class RoomList extends Component {
     return (
       <div className="room">
         {rooms}
-        <form onSubmit={(e) => this.createRoom(e)}>
-          <input type="text" value={this.state.newRoomName} onChange={e => this.handleRoomCreation(e)} />
-          <button type="submit" >Submit</button>
+        <form onSubmit={e => this.createRoom(e)}>
+          <input
+            type="text"
+            value={this.state.newRoomName}
+            onChange={e => this.handleRoomCreation(e)}
+          />
+          <button type="submit">Submit</button>
         </form>
       </div>
     );
