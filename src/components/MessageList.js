@@ -17,12 +17,13 @@ class MessageList extends Component {
       });
     });
   }
+ 
   render() {
     return (
       <div className="messages">
         {this.state.messages.map(message => {
           if (message.roomId == this.props.activeRoom) {
-            return <div>{message.content}</div>;
+          return <div key={message.key}>{message.username} {message.content} {message.sentAt}</div>;
           }
         })}
       </div>
