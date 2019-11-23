@@ -18,9 +18,15 @@ class MessageList extends Component {
     });
   }
   render() {
-    return <div>{this.state.messages.filter(message => {
-        return message.roomId = 2
-    })}</div>;
+    return (
+      <div className="messages">
+        {this.state.messages.map(message => {
+          if (message.roomId == this.props.activeRoom) {
+            return <div>{message.content}</div>;
+          }
+        })}
+      </div>
+    );
   }
 }
 

@@ -41,7 +41,7 @@ class App extends Component {
             activeRoom={this.activeRoom.bind(this)}
           />
         ) : (
-          <MessageList firebase={firebase} />
+          <MessageList firebase={firebase} activeRoom={this.state.activeRoom} />
         )}
       </div>
     );
