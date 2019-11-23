@@ -3,6 +3,7 @@ import "./App.css";
 import * as firebase from "firebase";
 import RoomList from "./components/RoomList.js";
 import MessageList from "./components/MessageList.js";
+import User from "./components/User.js";
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -23,8 +24,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeRoom: null
+      activeRoom: null,
+      user: "Guest"
     };
+  }
+  setUser(user){
+    this.setState({
+      user: user.displayName
+    })
   }
   activeRoom(room) {
     this.setState({
@@ -43,6 +50,7 @@ class App extends Component {
         ) : (
           <MessageList firebase={firebase} activeRoom={this.state.activeRoom} />
         )}
+        <User user={this.state.user} setUser={this.setUser.bind(this)} firebase={firebase}/>
       </div>
     );
   }
