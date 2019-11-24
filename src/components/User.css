@@ -1,0 +1,10 @@
+.auth{
+    border-radius: 5px;
+    padding: 5px 5px;
+    margin-top: 3%;
+    font-weight: bolder;
+    width: 20%;
+    left: 40%;
+    position: relative;
+    background-color: lightgreen;
+}
