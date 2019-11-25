@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
 import * as firebase from "firebase";
-import RoomList from "./components/RoomList.js";
-import MessageList from "./components/MessageList.js";
-import User from "./components/User.js";
+import RoomList from "./components/RoomList";
+import MessageList from "./components/MessageList";
+import User from "./components/User";
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -24,33 +24,45 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeRoom: null,
+      activeRoom: "",
       user: "Guest"
     };
   }
-  setUser(user){
-    this.setState({
-      user: user.displayName
-    })
+
+  handleRoomClick(room) {
+    this.setState({ activeRoom: room });
   }
-  activeRoom(room) {
-    this.setState({
-      activeRoom: room.key
-    });
+
+  setUser(user) {
+    this.setState({ user: user.displayName });
   }
 
   render() {
+    const showMessages = this.state.activeRoom;
     return (
       <div className="App">
-        {this.state.activeRoom == null ? (
+        <aside id="sidebar">
+          <h1 className="appName">FlatChat</h1>
+          <h4>Create rooms and send some messages!</h4>
+          <User
+            firebase={firebase}
+            setUser={this.setUser.bind(this)}
+            user={this.state.user}
+          />
           <RoomList
             firebase={firebase}
-            activeRoom={this.activeRoom.bind(this)}
+            handleRoomClick={room => this.handleRoomClick(room)}
+            activeRoom={this.state.activeRoom}
           />
-        ) : (
-          <MessageList user={this.state.user} firebase={firebase} activeRoom={this.state.activeRoom} />
-        )}
-        <User user={this.state.user} setUser={this.setUser.bind(this)} firebase={firebase}/>
+        </aside>
+
+        {showMessages ? (
+          <MessageList
+            firebase={firebase}
+            activeRoom={this.state.activeRoom}
+            user={this.state.user}
+          />
+        ) : null}
       </div>
     );
   }

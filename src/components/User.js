@@ -1,17 +1,14 @@
 import React, { Component } from "react";
-import "./User.css" 
+
 class User extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       //
     };
   }
-  componentDidMount() {
-    this.props.firebase.auth().onAuthStateChanged(user => {
-      this.props.setUser(user);
-    });
-  }
+
   signIn() {
     var provider = new this.props.firebase.auth.GoogleAuthProvider();
     this.props.firebase.auth().signInWithPopup(provider);
@@ -20,18 +17,32 @@ class User extends Component {
     this.props.firebase.auth().signOut();
     window.location.reload(false);
   }
-  3;
+
+  componentDidMount() {
+    this.props.firebase.auth().onAuthStateChanged(user => {
+      this.props.setUser(user);
+    });
+  }
+
   render() {
     return (
-      <div>
-        {this.props.user}
+      <div id="buttons">
+        <h4 id="displayName">
+          Current User: {this.props.user ? this.props.user : "Guest"}
+        </h4>
+
         {this.props.user == "Guest" ? (
-          <div className="auth" onClick={() => this.signIn()}>SignIn</div>
+          <button id="signInBtn" onClick={() => this.signIn()}>
+            Sign In
+          </button>
         ) : (
-          <div className="auth" onClick={() => this.signOut()}>SignOut</div>
+          <button id="signInBtn" onClick={() => this.signOut()}>
+            Sign Out
+          </button>
         )}
       </div>
     );
   }
 }
+
 export default User;

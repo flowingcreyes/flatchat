@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "../App.css";
 
 class RoomList extends Component {
   constructor(props) {
@@ -7,52 +8,69 @@ class RoomList extends Component {
       rooms: [],
       newRoomName: ""
     };
-
     this.roomsRef = this.props.firebase.database().ref("rooms");
   }
-  componentDidMount() {
-    this.roomsRef.on("child_added", snapshot => {
-      const room = snapshot.val();
-      room.key = snapshot.key;
-      this.setState({
-        rooms: this.state.rooms.concat(room)
-      });
-    });
+
+  handleChange(e) {
+    this.setState({ newRoomName: e.target.value });
   }
-  handleRoomCreation(e) {
-    this.setState({
-      newRoomName: e.target.value
-    });
-  }
+
   createRoom(e) {
     e.preventDefault();
     this.roomsRef.push({
       name: this.state.newRoomName
     });
+    document.getElementById("roomInput").value = "";
+  }
+
+  deleteRoom(room) {
+    const deleteKey = room.key;
+    this.roomsRef.child(deleteKey).remove();
     this.setState({
-      newRoomName: ""
+      rooms: this.state.rooms.filter(room => room.key !== deleteKey)
+    });
+  }
+
+  componentDidMount() {
+    this.roomsRef.on("child_added", snapshot => {
+      const room = snapshot.val();
+      room.key = snapshot.key;
+      this.setState({ rooms: this.state.rooms.concat(room) });
     });
   }
 
   render() {
-    let rooms = this.state.rooms.map(room => (
-      <div key={room.key} onClick={() => this.props.activeRoom(room)}>
-        {room.name}
-      </div>
-    ));
     return (
-      <div className="room">
-        {rooms}
-        <form onSubmit={e => this.createRoom(e)}>
+      <div className="roomList">
+        <h3>Rooms:</h3>
+        {this.state.rooms.map(room => (
+          <li
+            key={room.key}
+            onClick={() => this.props.handleRoomClick(room)}
+            className="room-list"
+          >
+            {room.name}
+            <button id="delete" onClick={() => this.deleteRoom(room)}>
+              <ion-icon name="trash" />{" "}
+            </button>
+          </li>
+        ))}
+        <h3>Create New Room:</h3>
+        <form className="newRoom" onSubmit={e => this.createRoom(e)}>
           <input
             type="text"
-            value={this.state.newRoomName}
-            onChange={e => this.handleRoomCreation(e)}
+            autoComplete="off"
+            id="roomInput"
+            placeholder="New Room Name"
+            onChange={e => this.handleChange(e)}
           />
-          <button type="submit">Submit</button>
+          <button id="roomBtn">
+            <ion-icon name="add-circle" />{" "}
+          </button>
         </form>
       </div>
     );
   }
 }
+
 export default RoomList;
