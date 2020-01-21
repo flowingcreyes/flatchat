@@ -6,19 +6,19 @@ import MessageList from "./components/MessageList";
 import User from "./components/User";
 
 // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyBxrzLC0uRRuyl6tiUTKE-b2P8ucelyD0c",
-    authDomain: "flatchat-76c5a.firebaseapp.com",
-    databaseURL: "https://flatchat-76c5a.firebaseio.com",
-    projectId: "flatchat-76c5a",
-    storageBucket: "flatchat-76c5a.appspot.com",
-    messagingSenderId: "859474629760",
-    appId: "1:859474629760:web:98b98fa4112b2d91df0265",
-    measurementId: "G-6MMBV85DR8"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
+var firebaseConfig = {
+  apiKey: "AIzaSyBxrzLC0uRRuyl6tiUTKE-b2P8ucelyD0c",
+  authDomain: "flatchat-76c5a.firebaseapp.com",
+  databaseURL: "https://flatchat-76c5a.firebaseio.com",
+  projectId: "flatchat-76c5a",
+  storageBucket: "flatchat-76c5a.appspot.com",
+  messagingSenderId: "859474629760",
+  appId: "1:859474629760:web:98b98fa4112b2d91df0265",
+  measurementId: "G-6MMBV85DR8"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
 class App extends Component {
   constructor(props) {
